@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Item;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,6 +24,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+
+        $getItems = Item::select('id', 'name', 'description', 'image')->orderBy('id', 'DESC')->get();
+
+        return view('home', compact('getItems'));
     }
 }
