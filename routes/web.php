@@ -28,4 +28,5 @@ Route::prefix('item')->group(function () {
     Route::get('/edit/{id}',  [ItemController::class, 'edit'])->name('item.edit');
     Route::put('/update/{id}',  [ItemController::class, 'update'])->name('item.update');
     Route::delete('/delete/{id}',  [ItemController::class, 'destroy'])->name('item.destroy');
+    Route::post('/search', [ItemController::class, 'searchItem'])->name('item.search');
 });

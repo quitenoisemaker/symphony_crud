@@ -13,7 +13,7 @@ class UpdateItemRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -25,6 +25,9 @@ class UpdateItemRequest extends FormRequest
     {
         return [
             //
+            'name' => 'sometimes|required',
+            'image' => 'sometimes|required|mimes:jpeg,png,jpg',
+            'description' => 'sometimes|required|max:250'
         ];
     }
 }

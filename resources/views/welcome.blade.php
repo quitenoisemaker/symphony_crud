@@ -29,7 +29,7 @@
                     <h2>Symphony Solution</h2>
                     @if (Route::has('login'))
                         @auth
-                            <h3><a href="{{ url('/home') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Home</a></h3>
+                            <h3><a href="{{ url('/dashboard') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Home</a></h3>
                         @else
                             <h3><a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Log in</a></h3>
                         @endauth

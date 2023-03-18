@@ -24,8 +24,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-
-        $getItems = Item::select('id', 'name', 'description', 'image')->orderBy('id', 'DESC')->get();
+        $noOfRecords = 10;
+        $getItems = Item::select('id', 'name', 'description', 'image')->orderBy('id', 'DESC')->paginate($noOfRecords);
 
         return view('home', compact('getItems'));
     }
