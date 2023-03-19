@@ -3,9 +3,22 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <div class="col-4"> <a href="{{ route('item.create') }}" class="btn btn-success btn-sm m-1">Click
+            <div class="col-4 pb-4"> <a href="{{ route('item.create') }}" class="btn btn-success btn-sm m-1">Click
                     Here to Add Item</a>
             </div>
+
+            <form>
+                <div class="form-row align-items-center">
+                    <div class="col-auto">
+                        <input type="text" class="form-control mb-2" name="search_item" id="searchItem"
+                            placeholder="Search item by name or description">
+                    </div>
+                    <div class="col-auto">
+                        <button type="submit" id="filter_page"class="btn btn-primary mb-2">Search</button>
+                    </div>
+                </div>
+            </form>
+
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">{{ __('Dashboard') }}</div>
@@ -25,7 +38,7 @@
                                         <th></th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="item-body">
                                     @foreach ($getItems as $getItem)
                                         @php
                                             $no++;
@@ -55,9 +68,12 @@
                             @endif
                         </table>
                     </div>
+                    {{ $getItems->links() }}
                 </div>
             </div>
         </div>
     </div>
-
+@endsection
+@section('scripts')
+    @include('items.filter-script')
 @endsection

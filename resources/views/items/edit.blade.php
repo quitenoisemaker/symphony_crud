@@ -18,7 +18,8 @@
                         @endif
                         <form method="POST" action="{{ route('item.update', ['id' => $getItem->id]) }}"
                             enctype="multipart/form-data">
-                            @csrf
+                            {{ csrf_field() }}
+                            {{ method_field('PUT') }}
                             <div class="form-row">
                                 <div class="form-group col-md-12">
                                     <label for="name">Name</label>

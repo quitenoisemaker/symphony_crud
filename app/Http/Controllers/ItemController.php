@@ -6,23 +6,18 @@ use App\Models\Item;
 use Illuminate\Http\Request;
 use App\Http\Requests\ItemRequest;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\UpdateItemRequest;
 
 class ItemController extends Controller
 {
 
-    public function __construct()
+    protected $item;
+
+    public function __construct(Item $item)
     {
         $this->middleware('auth');
-    }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
+        $this->item = $item;
     }
 
     /**
@@ -42,22 +37,11 @@ class ItemController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ItemRequest $request, Item $item)
+    public function store(ItemRequest $request)
     {
         //
-        $item->storeItem($request);
+        $this->item->storeItem($request);
         return redirect('/home');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
     }
 
     /**
@@ -81,9 +65,19 @@ class ItemController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateItemRequest $request, $id)
     {
         //
+        $getItem = Item::findOrFail($id);
+
+        $validatedData = $request->validated();
+        if ($request->hasFile('image')) {
+            $validatedData['image'] = $request->file('image')->store('itemPhoto', 'public');
+        }
+
+        $getItem->update($validatedData);
+
+        return redirect('/home');
     }
 
     /**
@@ -100,5 +94,12 @@ class ItemController extends Controller
         $getItem->delete();
 
         return back();
+    }
+
+    public function searchItem(Request $request)
+    {
+        $getResult = $this->item->searchItemWithEtherNameOrDescription($request);
+
+        return $getResult;
     }
 }
